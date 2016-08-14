@@ -20,6 +20,7 @@ var UserDetailsComponent = (function () {
     // Load data ones componet is ready
     UserDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log("User List detail Loaded");
         // Subscribe to route params
         this.sub = this.route.params.subscribe(function (params) {
             var login = params['login'];

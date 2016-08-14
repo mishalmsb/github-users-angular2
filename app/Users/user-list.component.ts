@@ -27,16 +27,14 @@ export class UserListComponent implements OnInit {
   user        = "";
   users:    Observable<User[]>;
   
-  constructor(private userService: UserService) {
-
-  }
+  constructor(private userService: UserService) {}
 
   searchUser(user) {
     this.users  = this.userService.findUsers(this.searchQuery);
   }
 
   ngOnInit() {
-    //this.users  = this.userService.findUsers("mishal");
+    console.log("User List component Loaded");
   }
 
 

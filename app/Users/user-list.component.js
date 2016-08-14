@@ -22,7 +22,7 @@ var UserListComponent = (function () {
         this.users = this.userService.findUsers(this.searchQuery);
     };
     UserListComponent.prototype.ngOnInit = function () {
-        //this.users  = this.userService.findUsers("mishal");
+        console.log("User List component Loaded");
     };
     UserListComponent = __decorate([
         core_1.Component({

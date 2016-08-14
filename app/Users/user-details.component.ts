@@ -27,6 +27,7 @@ export class UserDetailsComponent implements OnInit {
 
   // Load data ones componet is ready
   ngOnInit() {
+      console.log("User List detail Loaded")
       // Subscribe to route params
       this.sub = this.route.params.subscribe(params => {
          let login = params['login'];

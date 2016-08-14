@@ -23,19 +23,22 @@ var UserDetailsComponent = (function () {
         // Subscribe to route params
         this.sub = this.route.params.subscribe(function (params) {
             var login = params['login'];
-            // Retrieve Pet with Id route param
+            // Retrieve User with Login route param
             _this.userService.findUserByLogin(login).subscribe(function (user) { return _this.user = user; });
         });
-        this.userService.findUserByLogin(login);
+    };
+    UserDetailsComponent.prototype.ngOnDestroy = function () {
+        // Clean sub to avoid memory leak
+        this.sub.unsubscribe();
     };
     UserDetailsComponent = __decorate([
         core_1.Component({
-            template: "\n      <h1> User </h1>\n    ",
+            template: "\n      <h1> User </h1>\n      <div *ngIf=\"user\">\n          <h2>{{user.login}}</h2>\n      </div>\n    ",
             // Providers
             providers: [user_service_1.UserService],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [user_service_1.UserService, Object])
+        __metadata('design:paramtypes', [user_service_1.UserService, router_1.ActivatedRoute])
     ], UserDetailsComponent);
     return UserDetailsComponent;
 }());

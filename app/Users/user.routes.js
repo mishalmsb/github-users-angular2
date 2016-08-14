@@ -6,5 +6,4 @@ exports.UserRoutes = [
     { path: 'users', component: user_list_component_1.UserListComponent },
     { path: 'users/:login', component: user_details_component_1.UserDetailsComponent }
 ];
-//# sourceMappingURL=cat.routes.js.map
 //# sourceMappingURL=user.routes.js.map

@@ -13,26 +13,20 @@ var core_1 = require('@angular/core');
 var user_service_1 = require('../user.service');
 var router_1 = require('@angular/router');
 var UserListComponent = (function () {
-    // cats:     Observable<Pet[]>;
     function UserListComponent(userService) {
         this.userService = userService;
         this.searchQuery = "";
         this.user = "";
     }
-    UserListComponent.prototype.searchUser = function () {
+    UserListComponent.prototype.searchUser = function (user) {
         this.users = this.userService.findUsers(this.searchQuery);
     };
-    UserListComponent.prototype.getUser = function (user) {
-        this.router.navigate(['/user', user]);
-    };
     UserListComponent.prototype.ngOnInit = function () {
-        // this.cats   = this.petService.findPets('cat');
-        //this.users  = this.userService.findUsers();
-        this.users = this.userService.findUsers("mishal");
+        //this.users  = this.userService.findUsers("mishal");
     };
     UserListComponent = __decorate([
         core_1.Component({
-            template: "\n\n\n    <input type=\"text\" id=\"name\"\n           required\n           [(ngModel)]=\"searchQuery\" name=\"name\">\n\n     <button type=\"button\" class=\"btn btn-default\" (click)=\"searchUser()\">Search User</button>\n\n    \n    <li class=\"mdl-list__item\" *ngFor=\"let user of users | async\">\n      \n      <a [routerLink]=\"['/user']\">{{ user.login }}</a>\n    </li>\n    ",
+            template: "\n\n    <input type=\"text\" id=\"name\"\n           required\n           [(ngModel)]=\"searchQuery\" name=\"name\">\n     <button type=\"button\" class=\"btn btn-default\" (click)=\"searchUser()\">Search User</button>\n    \n    <li class=\"mdl-list__item\" *ngFor=\"let user of users | async\">\n        <a [routerLink]=\"['/users', user.login]\">{{user.login}}</a>\n    </li>\n    ",
             providers: [user_service_1.UserService],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 

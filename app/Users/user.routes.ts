@@ -1,11 +1,12 @@
-"use strict";
-var user_list_component_1 = require('./user-list.component');
-var user_details_component_1 = require('./user-details.component');
-// Route Configuration
-exports.UserRoutes = [
-    { path: 'users', component: user_list_component_1.UserListComponent },
-    { path: 'users/:login', component: user_details_component_1.UserDetailsComponent }
-];
-//# sourceMappingURL=cat.routes.js.map
+// Imports
+import { provideRouter, RouterConfig } from '@angular/router';
 
+import { UserListComponent }    from './user-list.component';
+import { UserDetailsComponent }    from './user-details.component';
+
+// Route Configuration
+export const UserRoutes: RouterConfig = [
+  { path: 'users', component: UserListComponent },
+  { path: 'users/:login', component: UserDetailsComponent }
+];
 

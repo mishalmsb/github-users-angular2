@@ -20,6 +20,7 @@ var UserService = (function () {
         this.http = http;
         // Base URL for Petfinder API
         this.usersUrl = 'https://api.github.com/search/users?q=';
+        this.userUrl = 'https://api.github.com/users/';
     }
     // Get a list if pets based on animal
     UserService.prototype.findUsers = function (user) {
@@ -31,7 +32,10 @@ var UserService = (function () {
         // })
     };
     UserService.prototype.findUserByLogin = function (user) {
-        console.log(user);
+        return this.http.get(this.userUrl + user)
+            .map(function (response) {
+            return response.json();
+        });
     };
     UserService = __decorate([
         core_1.Injectable(), 

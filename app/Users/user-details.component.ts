@@ -2,11 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service'
 import { Observable } from 'rxjs/Observable';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
 
 @Component({
   template: `
       <h1> User </h1>
+      <div *ngIf="user">
+          <h2>{{user.login}}</h2>
+      </div>
     `,
     // Providers
     providers: [UserService],
@@ -26,19 +29,14 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit() {
       // Subscribe to route params
       this.sub = this.route.params.subscribe(params => {
-        let login = params['login'];
-       // Retrieve Pet with Id route param
-        this.userService.findUserByLogin(login).subscribe(user => this.user = user);
-
-      
-
-    });
-
-    this.userService.findUserByLogin(login);
+         let login = params['login'];
+        // Retrieve User with Login route param
+         this.userService.findUserByLogin(login).subscribe(user => this.user = user);
+       });
   }
 
-  // ngOnDestroy() {
-  //     // Clean sub to avoid memory leak
-  //   this.sub.unsubscribe();
-  // }
+  ngOnDestroy() {
+      // Clean sub to avoid memory leak
+    this.sub.unsubscribe();
+  }
 }

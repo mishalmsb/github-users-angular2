@@ -22,11 +22,11 @@ var UserListComponent = (function () {
         this.users = this.userService.findUsers(this.searchQuery);
     };
     UserListComponent.prototype.ngOnInit = function () {
-        console.log("User List component Loaded");
+        console.log("User list comonent init");
     };
     UserListComponent = __decorate([
         core_1.Component({
-            template: "\n\n    <input type=\"text\" id=\"name\"\n           required\n           [(ngModel)]=\"searchQuery\" name=\"name\">\n     <button type=\"button\" class=\"btn btn-default\" (click)=\"searchUser()\">Search User</button>\n    \n    <li class=\"mdl-list__item\" *ngFor=\"let user of users | async\">\n        <a [routerLink]=\"['/users', user.login]\">{{user.login}}</a>\n    </li>\n    ",
+            template: "\n\n    <input type=\"text\" id=\"name\"\n           required\n           [(ngModel)]=\"searchQuery\" name=\"name\">\n     <button type=\"button\" class=\"btn btn-default\" (click)=\"searchUser()\">Search User</button>\n    \n    <li class=\"mdl-list__item\" *ngFor=\"let user of users | async\">\n        <a [routerLink]=\"['/users', user.login]\">{{user.login}}</a>\n        <img src=\"{{ user.avatar_url }}\" id=\"imgThumbnail\">\n    </li>\n    ",
             providers: [user_service_1.UserService],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 

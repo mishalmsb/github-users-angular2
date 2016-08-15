@@ -15,6 +15,7 @@ import { User } from '../user';
     
     <li class="mdl-list__item" *ngFor="let user of users | async">
         <a [routerLink]="['/users', user.login]">{{user.login}}</a>
+        <img src="{{ user.avatar_url }}" id="imgThumbnail">
     </li>
     `,
     providers: [UserService],
@@ -26,15 +27,15 @@ export class UserListComponent implements OnInit {
   searchQuery = "";
   user        = "";
   users:    Observable<User[]>;
-  
+
   constructor(private userService: UserService) {}
 
   searchUser(user) {
-    this.users  = this.userService.findUsers(this.searchQuery);
+    this.users    = this.userService.findUsers(this.searchQuery);
   }
 
   ngOnInit() {
-    console.log("User List component Loaded");
+    console.log("User list comonent init");
   }
 
 

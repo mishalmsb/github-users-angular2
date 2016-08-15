@@ -17,6 +17,21 @@ var UserDetailsComponent = (function () {
         this.userService = userService;
         this.route = route;
     }
+    UserDetailsComponent.prototype.dynamicSort = function (property) {
+        var sortOrder = 1;
+        if (property[0] === "-") {
+            sortOrder = -1;
+            property = property.substr(1);
+        }
+        return function (a, b) {
+            var result = (a[property] > b[property]) ? -1 : (a[property] < b[property]) ? 1 : 0;
+            return result * sortOrder;
+        };
+    };
+    UserDetailsComponent.prototype.ngOnDestroy = function () {
+        // Clean sub to avoid memory leak
+        this.sub.unsubscribe();
+    };
     // Load data ones componet is ready
     UserDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -25,16 +40,23 @@ var UserDetailsComponent = (function () {
         this.sub = this.route.params.subscribe(function (params) {
             var login = params['login'];
             // Retrieve User with Login route param
-            _this.userService.findUserByLogin(login).subscribe(function (user) { return _this.user = user; });
+            _this.userService.findUserByLogin(login).subscribe(function (user) {
+                _this.user = user,
+                    console.log(user);
+            });
+            _this.userService.getUserRepo(login).subscribe(function (repo) {
+                _this.repo = repo,
+                    _this.repo.sort(_this.dynamicSort("stargazers_count"));
+                if (_this.repo.length > 3) {
+                    _this.repo = _this.repo.slice(0, 3);
+                }
+                console.log(_this.repo);
+            });
         });
-    };
-    UserDetailsComponent.prototype.ngOnDestroy = function () {
-        // Clean sub to avoid memory leak
-        this.sub.unsubscribe();
     };
     UserDetailsComponent = __decorate([
         core_1.Component({
-            template: "\n      <h1> User </h1>\n      <div *ngIf=\"user\">\n          <h2>{{user.login}}</h2>\n      </div>\n    ",
+            template: "\n      <h1> User </h1>\n      <div *ngIf=\"user\">\n          <h2>{{ user.name }}</h2>\n          <li class=\"mdl-list__item\" *ngFor=\"let r of repo \">\n          <a href=\"{{ r.html_url }}\" target=\"_blank\">\n            {{ r.name }} {{ r.stargazers_count }}\n          </a>\n          </li>\n      </div>\n      <a [routerLink]=\"['/users']\">Back</a>\n\n\n      <div *ngIf=\"user\" class='container' id='container'>\n        <div class=\"row\">\n            <div class=\"col-md-2 col-md-offset-3\">\n              <div class='card-wrapper'>\n                <div class='main-window' id='main-window'>\n                  <div class='user-image' [ngStyle]=\"{'background-image': 'url(' + user.avatar_url + ')'}\">\n                    <div class='username'>{{ user.name }}</div>\n                  </div>\n                </div>\n              </div>\n            </div>\n        </div>\n      </div>\n\n\n\n    ",
             // Providers
             providers: [user_service_1.UserService],
             directives: [router_1.ROUTER_DIRECTIVES]

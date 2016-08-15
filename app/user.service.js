@@ -21,11 +21,15 @@ var UserService = (function () {
         // Base URL for Petfinder API
         this.usersUrl = 'https://api.github.com/search/users?q=';
         this.userUrl = 'https://api.github.com/users/';
+        // Get a list if pets based on animal
+        this.user = "";
     }
-    // Get a list if pets based on animal
     UserService.prototype.findUsers = function (user) {
         return this.http.get(this.usersUrl + user)
-            .map(function (response) { return response.json().items; });
+            .map(function (response) {
+            return response.json().items;
+        });
+        //.map(response => <User[]> response.json().items);
         // .map(response => {
         //   <User[]> response.json().items,
         //   //console.log(response.json().items)
@@ -33,6 +37,12 @@ var UserService = (function () {
     };
     UserService.prototype.findUserByLogin = function (user) {
         return this.http.get(this.userUrl + user)
+            .map(function (response) {
+            return response.json();
+        });
+    };
+    UserService.prototype.getUserRepo = function (user) {
+        return this.http.get("https://api.github.com/users/" + user + "/repos?page=1&per_page=100")
             .map(function (response) {
             return response.json();
         });

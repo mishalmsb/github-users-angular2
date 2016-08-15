@@ -7,18 +7,6 @@ import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
 
 @Component({
   template: `
-      <h1> User </h1>
-      <div *ngIf="user">
-          <h2>{{ user.name }}</h2>
-          <li class="mdl-list__item" *ngFor="let r of repo ">
-          <a href="{{ r.html_url }}" target="_blank">
-            {{ r.name }} {{ r.stargazers_count }}
-          </a>
-          </li>
-      </div>
-      <a [routerLink]="['/users']">Back</a>
-
-
       <div *ngIf="user" class='container' id='container'>
         <div class="row">
             <div class="col-md-2 col-md-offset-3">
@@ -26,6 +14,36 @@ import { ROUTER_DIRECTIVES, ActivatedRoute } from '@angular/router';
                 <div class='main-window' id='main-window'>
                   <div class='user-image' [ngStyle]="{'background-image': 'url(' + user.avatar_url + ')'}">
                     <div class='username'>{{ user.name }}</div>
+                  </div>
+                  <div class='user-info'>
+                    <div class='quote'> 
+                      <span class="glyphicon glyphicon-home"></span> 
+                      {{ user.location }}
+                      <br>
+                      <a href="mailto:{{user.email}}">
+                        <span class="glyphicon glyphicon-envelope" ng-show="user.email"></span>
+                      </a>
+                      <a href="{{user.html_url}}" target="_blank"> 
+                        <i class="glyphicon glyphicon-link" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </div>
+                  <div class='repo-info'>
+                    <div class='repo-info-elm' *ngFor="let r of repo "> 
+                      <a href="{{r.html_url}}" target="_blanc"> {{ r.name }} </a> 
+                    </div>
+                  </div>
+                  <div class='repo-count'>
+                    <div class='repo-count' *ngFor="let r of repo "> 
+                      <span class='lg'>{{ r.stargazers_count }}</span>
+                    </div>
+                  </div>
+                  <div class="user-info"> 
+                      <div class='quote'>
+                        <a [routerLink]="['/users']">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </a>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -75,7 +93,7 @@ export class UserDetailsComponent implements OnInit {
           // Retrieve User with Login route param
            this.userService.findUserByLogin(login).subscribe(user => {
               this.user = user,
-              console.log(user)
+              console.log(user.html_url)
            });
            this.userService.getUserRepo(login).subscribe(repo => {
               this.repo = repo,

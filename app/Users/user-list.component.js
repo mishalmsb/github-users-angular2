@@ -20,13 +20,14 @@ var UserListComponent = (function () {
     }
     UserListComponent.prototype.searchUser = function (user) {
         this.users = this.userService.findUsers(this.searchQuery);
+        this.searchQuery = "";
     };
     UserListComponent.prototype.ngOnInit = function () {
         console.log("User list comonent init");
     };
     UserListComponent = __decorate([
         core_1.Component({
-            template: "\n\n    <div class=\"row\">\n      <div class=\"  col-md-3 col-md-offset-5 col-sm-offset-4\">\n        <div class=\"input-group add-on\">\n          <input  id=\"srch-term\" class=\"form-control\" type=\"text\" id=\"name\"\n                 required\n                 [(ngModel)]=\"searchQuery\" name=\"name\" (keyup.enter)=\"searchUser()\">\n           <div class=\"input-group-btn\">\n              <button type=\"button\" class=\"btn btn-default\" (click)=\"searchUser()\">\n                 <i class=\"glyphicon glyphicon-search\"></i>\n              </button>\n            </div>\n          </div>\n      </div>\n    </div>\n\n    <div class=\"row\">\n      <div class=\"container users-container\">\n          <div class=\"col-xs-18 col-sm-6 col-md-3\" *ngFor=\"let user of users | async\">\n            <a [routerLink]=\"['/users', user.login]\">\n              <div class=\"thumbnail\">\n                  <img src=\"{{ user.avatar_url }}\" id=\"imgThumbnail\">\n                  <div class=\"caption\">\n                      <h5>{{ user.login }}</h5>\n                  </div>\n              </div>\n            </a>\n          </div>\n      </div>\n    </div>\n    ",
+            template: "\n\n    <div class=\"row\">\n      <div class=\"  col-md-3 col-md-offset-5 col-sm-offset-4\">\n        <div class=\"input-group add-on\">\n          <input  id=\"srch-term\" class=\"form-control\" type=\"text\" id=\"name\"\n                 required\n                 [(ngModel)]=\"searchQuery\" name=\"name\" (keyup.enter)=\"searchUser()\">\n           <div class=\"input-group-btn\">\n              <button type=\"button\" class=\"btn btn-default\" (click)=\"searchUser()\">\n                 <i class=\"glyphicon glyphicon-search\"></i>\n              </button>\n            </div>\n          </div>\n      </div>\n    </div>\n\n    <div class=\"row\">\n      <div class=\"container users-container\">\n          <div class=\"col-xs-18 col-sm-6 col-md-3\" *ngFor=\"let user of users | async\">\n            <a [routerLink]=\"['/users', user.login]\">\n              <div class=\"thumbnail\">\n                  <img src=\"{{ user.avatar_url }}\" id=\"imgThumbnail\">\n                  <div class=\"caption\">\n                      <h5>{{ user.login }}</h5>\n                  </div>\n              </div>\n            </a>\n          </div>\n      </div>\n    </div>\n\n    ",
             providers: [user_service_1.UserService],
             directives: [router_1.ROUTER_DIRECTIVES]
         }), 

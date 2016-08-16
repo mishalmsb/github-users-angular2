@@ -2,6 +2,7 @@
 import { Injectable }    from '@angular/core';
 import { Http, Jsonp, URLSearchParams } from '@angular/http';
 import { User } from './user';
+
 import 'rxjs/add/operator/toPromise';
 
 // Decorator to tell Angular that this class can be injected as a service to another class
@@ -17,10 +18,32 @@ export class UserService {
   // Get a list if pets based on animal
   user        = "";
   
+  test() {
+        let wikiUrl = 'https://api.github.com/search/users?q=mishal';
+
+        // let params = new URLSearchParams();
+        // params.set('search', term); // the user's search value
+        // params.set('action', 'opensearch');
+        // params.set('format', 'json');
+        // params.set('callback', 'JSONP_CALLBACK');
+        // TODO: Add error handling
+
+        return this.jsonp
+                   .get(wikiUrl)
+                   .map(request => {
+                      console.log("hello");
+                      <string[]> request.json()[1]
+                   });
+      }
+
+
+  
+
   findUsers(user) {
 
     return this.http.get(this.usersUrl + user)
                     .map(response => {
+                      this.user = response.json().items;
                       return <User[]> response.json().items
                     })
                     //.map(response => <User[]> response.json().items);
@@ -45,5 +68,7 @@ export class UserService {
                             return  response.json()
                           })
   }
+
+
 
 }

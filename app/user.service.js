@@ -24,9 +24,26 @@ var UserService = (function () {
         // Get a list if pets based on animal
         this.user = "";
     }
+    UserService.prototype.test = function () {
+        var wikiUrl = 'https://api.github.com/search/users?q=mishal';
+        // let params = new URLSearchParams();
+        // params.set('search', term); // the user's search value
+        // params.set('action', 'opensearch');
+        // params.set('format', 'json');
+        // params.set('callback', 'JSONP_CALLBACK');
+        // TODO: Add error handling
+        return this.jsonp
+            .get(wikiUrl)
+            .map(function (request) {
+            console.log("hello");
+            request.json()[1];
+        });
+    };
     UserService.prototype.findUsers = function (user) {
+        var _this = this;
         return this.http.get(this.usersUrl + user)
             .map(function (response) {
+            _this.user = response.json().items;
             return response.json().items;
         });
         //.map(response => <User[]> response.json().items);

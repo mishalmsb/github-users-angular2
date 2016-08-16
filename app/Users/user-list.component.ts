@@ -6,6 +6,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { User } from '../user';
 import { FormBuilder, Validators } from '@angular/common';
 
+
 @Component({
   template: `
 
@@ -38,6 +39,7 @@ import { FormBuilder, Validators } from '@angular/common';
           </div>
       </div>
     </div>
+
     `,
     providers: [UserService],
     directives: [ROUTER_DIRECTIVES]
@@ -50,15 +52,18 @@ export class UserListComponent implements OnInit {
   user        = "";
   users:    Observable<User[]>;
 
+
   constructor(private userService: UserService) {}
 
 
   searchUser(user) {
     this.users    = this.userService.findUsers(this.searchQuery);
+    this.searchQuery = "";
   }
 
   ngOnInit() {
     console.log("User list comonent init");
+
   }
 
 
